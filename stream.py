@@ -9,7 +9,7 @@ import subprocess
 
 # importing file which sets env variable
 subprocess.call("./settings.sh", shell=True)
-print('successful call')
+print('successfully loaded')
 
 
 print(os.environ)
@@ -20,23 +20,10 @@ access_token_secret = os.environ.get('ACCESS_TOKEN_SECRET')
 password = os.environ.get('PASSWORD')
 
 
-
-
-
-
-# consumer_key = "AMJPemK9c7DBeG3NBAUACYuOG"
-# consumer_secret = 'XykYZckKZlzIXd246QhZEsYS17oNaENfoPyhTFjgVILHTNqZpm'
-# access_token = '1177331399688253440-gEon1g93X1jmvnJnlrhMwoYhvMIS84'
-# access_token_secret = 'cRrX66VmyColXaG1NUIH3Et2szfwxyWAHdhXnIwIqbgaK'
-# password = 'November96#$'
-
 print(consumer_key,consumer_secret,access_token,access_token_secret)
 
 
 def connect(id, username, created_at, tweet, retweet_count, place, location):
-	"""
-	connect to MySQL database and insert twitter data
-	"""
 	try:
 		con = mysql.connector.connect(host='localhost',
 		database='twitterdb', user='purvi', password=password, charset='utf8')
@@ -62,7 +49,6 @@ def connect(id, username, created_at, tweet, retweet_count, place, location):
 	return
 
 
-# Tweepy class to access Twitter API
 class Streamlistener(tweepy.StreamListener):
 
 	def on_connect(self):
@@ -73,11 +59,6 @@ class Streamlistener(tweepy.StreamListener):
 			print("error found")
 			# returning false disconnects the stream
 			return False
-
-	"""
-	This method reads in tweet data as Json
-	and extracts the data we want.
-	"""
 
 	def on_data(self, data):
 
@@ -102,14 +83,11 @@ class Streamlistener(tweepy.StreamListener):
 
 				# insert data just collected into MySQL database
 				connect(id, username, created_at, tweet, retweet_count, place, location)
-				# print('THISSSSSSSSSSSSSSSSSSSSSs', id, username, created_at, tweet, retweet_count, place, location)
+				print('Tweet Content:', id, username, created_at, tweet, retweet_count, place, location)
 
 				print("Tweet collected at: {} ".format(str(created_at)))
 		except Error as e:
 			print(e)
-
-
-
 
 
 if __name__ == '__main__':
@@ -119,45 +97,6 @@ if __name__ == '__main__':
     api = tweepy.API(auth,wait_on_rate_limit=True)
     listener = Streamlistener(api =api)
     stream = tweepy.Stream(auth, listener = listener)
-    track = ['cheese', 'food']
+    track = ['golf', 'masters', 'reed', 'mcilroy', 'woods']
     
-    stream.filter(track = 'cheese')
-
-
-
-
-
-	# auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    # auth.set_access_token(access_token, access_token_secret)	
-
-
-	# # # #Allow user input
-	# # track = []
-	# # while True:
-
-	# # 	input1  = input("what do you want to collect tweets on?: ")
-	# # 	track.append(input1)
-
-	# # 	input2 = input("Do you wish to enter another word? y/n ")
-	# # 	if input2 == 'n' or input2 == 'N':
-	# # 		break
-
-	# # print("You want to search for {}".format(track))
-	# # print("Initialising Connection to Twitter API....")
-	# # time.sleep(2)
-
-	# # authentification so we can access twitter
-    # api = tweepy.API(auth, wait_on_rate_limit=True)
-    # listener = Streamlistener(api = api)
-    # stream = tweepy.Stream(auth, listener = listener)
-    # print('line 121')
-    # # print('line 117')
-
-
-	# # create instance of Streamlistener
-
-
-	# track = ['golf', 'masters', 'reed', 'mcilroy', 'woods']
-	# # track = ['nba', 'cavs', 'celtics', 'basketball']
-	# # choose what we want to filter by
-	# stream.filter(track = track, languages = ['en'])
+    stream.filter(track = track,languages = ['en'])
