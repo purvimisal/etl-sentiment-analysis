@@ -1,1 +1,1 @@
-# etl-tweet-pipeline
+# etl-sentiment-pipeline
