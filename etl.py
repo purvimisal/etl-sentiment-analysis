@@ -13,11 +13,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from textblob import TextBlob
 
-consumer_key='AMJPemK9c7DBeG3NBAUACYuOG'
-consumer_secret='XykYZckKZlzIXd246QhZEsYS17oNaENfoPyhTFjgVILHTNqZpm'
-access_token='1177331399688253440-gEon1g93X1jmvnJnlrhMwoYhvMIS84'
-access_token_secret='cRrX66VmyColXaG1NUIH3Et2szfwxyWAHdhXnIwIqbgaK'
-password='November96#$'
+consumer_key = os.environ['CONSUMER_KEY']
+consumer_secret = os.environ.get('CONSUMER_SECRET')
+access_token = os.environ.get('ACCESS_TOKEN')
+access_token_secret = os.environ.get('ACCESS_TOKEN_SECRET')
+password = os.environ.get('PASSWORD')
 
 
 class TweetObject():
